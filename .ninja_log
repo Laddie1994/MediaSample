@@ -1,0 +1,11 @@
+# ninja log v5
+31	318	0	CMakeFiles/live-push.dir/src/main/cpp/DZJNICall.cpp.o	e60c2cf7fd82b36b
+1	512	0	CMakeFiles/live-push.dir/src/main/cpp/native-lib.cpp.o	da6fd6b478435016
+43	538	0	CMakeFiles/live-push.dir/src/main/cpp/DZLivePush.cpp.o	a42cbb09c8e9ddef
+116	595	0	CMakeFiles/live-push.dir/src/main/cpp/rtmp/log.c.o	b901ff00070418a5
+103	598	0	CMakeFiles/live-push.dir/src/main/cpp/rtmp/hashswf.c.o	4f7f736d1cc67873
+134	615	0	CMakeFiles/live-push.dir/src/main/cpp/rtmp/parseurl.c.o	7e5a428e29768eaa
+90	649	0	CMakeFiles/live-push.dir/src/main/cpp/DZPacketQueue.cpp.o	969b7d8c32902e55
+55	691	0	CMakeFiles/live-push.dir/src/main/cpp/rtmp/amf.c.o	7483f7e145a24b3
+155	949	0	CMakeFiles/live-push.dir/src/main/cpp/rtmp/rtmp.c.o	6961b77e715edfb7
+950	1180	0	../../../../build/intermediates/cmake/debug/obj/armeabi-v7a/liblive-push.so	d5a4a70e6c7a2a74

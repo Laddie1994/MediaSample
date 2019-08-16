@@ -25,7 +25,7 @@ public class FboRenderer {
             "uniform sampler2D sTexture;\n" +
             "void main() {\n" +
             "    vec4 nColor = texture2D(sTexture, ft_Position);\n" +
-            "    gl_FragColor = nColor + vec4(0.0, 0.0, 0.2, 0.0);" +
+            "    gl_FragColor = nColor;" +
             "}";
 
     /**

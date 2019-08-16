@@ -1,1 +1,1 @@
-include ':app', ':opengles_smple'
+include ':opengles_smple'

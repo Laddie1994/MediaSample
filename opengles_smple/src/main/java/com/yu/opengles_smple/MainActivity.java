@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CameraView mCameraView;
     private boolean isStarting;
-    private RecordDelegate mRecordDelegate;
+    private VideoRecordDelegate mVideoRecordDelegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,26 +22,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStart(View v) {
-        if (mRecordDelegate == null){
-            mRecordDelegate = new RecordDelegate(this, mCameraView.getEGLContext(), mCameraView.getTextureId());
-            String outPath = new StringBuilder(Environment.getExternalStorageDirectory().getAbsolutePath())
-                    .append(File.separator)
-                    .append("test.mp4")
-                    .toString();
-            mRecordDelegate.initParams(outPath
-                    ,mCameraView.getWidth(), mCameraView.getHeight());
-        }
-
         Button mActiveBtn = (Button) v;
         if (isStarting) {
             isStarting = false;
             mActiveBtn.setText("开始");
-            mRecordDelegate.stopRecord();
+            mVideoRecordDelegate.stopRecord();
 
         } else {
             isStarting = true;
+            mVideoRecordDelegate = new VideoRecordDelegate(this, mCameraView.getEGLContext(), mCameraView.getTextureId());
+            String outPath = new StringBuilder(Environment.getExternalStorageDirectory().getAbsolutePath())
+                    .append(File.separator)
+                    .append("test.mp4")
+                    .toString();
+            mVideoRecordDelegate.initParams(outPath
+                    ,360, 640);
             mActiveBtn.setText("停止");
-            mRecordDelegate.startRecord();
+            mVideoRecordDelegate.startRecord();
         }
     }
 

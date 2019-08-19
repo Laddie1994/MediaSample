@@ -69,7 +69,7 @@ public class ImageRenderer implements GLSurfaceView.Renderer {
         //加载顶点着色器
         String vertextSource = Utils.getGLResource(mContext, R.raw.image_vertex_shader);
         //加载纹理着色器
-        String fragmentSource = Utils.getGLResource(mContext, R.raw.image_fragment_zoom_shader);
+        String fragmentSource = Utils.getGLResource(mContext, R.raw.image_fragment_shader);
         //编译GLES程序
         mProgram = Utils.createProgram(vertextSource, fragmentSource);
         //开启深度测试
@@ -94,14 +94,14 @@ public class ImageRenderer implements GLSurfaceView.Renderer {
                         , radio * bitRadio
                         , -1
                         , 1
-                        , 3, 7);
+                        , -3, 7);
             } else {
                 Matrix.orthoM(mProjectMatrix, 0
                         , -radio / bitRadio
                         , radio / bitRadio
                         , -1
                         , 1
-                        , 3, 7);
+                        , -3, 7);
             }
         } else {
             if (bitRadio > radio) {
@@ -110,19 +110,19 @@ public class ImageRenderer implements GLSurfaceView.Renderer {
                         , 1
                         , -1 / radio * bitRadio
                         , 1 / radio * bitRadio
-                        , 3, 7);
+                        , -3, 7);
             } else {
                 Matrix.orthoM(mProjectMatrix, 0
                         , -1
                         , 1
                         , -bitRadio / radio
                         , bitRadio / radio
-                        , 3, 7);
+                        , -3, 7);
             }
         }
 
         //设置相机位置
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 1f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
         //计算变换矩阵
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectMatrix, 0, mViewMatrix, 0);
     }
@@ -136,7 +136,7 @@ public class ImageRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glUniformMatrix4fv(vMatrix, 1, false, mMVPMatrix, 0);
 
-        GLES20.glUniform1i(vTexture, 0);
+        GLES20.glUniform1i(vTexture, 1);
 
         mTextureId = loadTextur();
 
@@ -148,7 +148,10 @@ public class ImageRenderer implements GLSurfaceView.Renderer {
         GLES20.glEnableVertexAttribArray(vCoordinate);
         GLES20.glVertexAttribPointer(vCoordinate, 2, GLES20.GL_FLOAT, false, 0, mFragmentBuffer);
 
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
     }
 
     /**

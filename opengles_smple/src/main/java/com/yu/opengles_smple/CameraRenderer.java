@@ -16,6 +16,27 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class CameraRenderer implements GLSurfaceView.Renderer {
 
+    private static final String VERTEX =
+            "attribute vec2 aTextureCoord;\n" +
+            "attribute vec4 aVertexCoord;\n" +
+            "varying vec2 vTextureCoord;\n" +
+            "uniform mat4 uVertexMatrix;\n" +
+            "uniform mat4 vCoordMatrix;\n" +
+            "void main(){\n" +
+            "    vTextureCoord = aTextureCoord;\n" +
+            "    gl_Position = uVertexMatrix * aVertexCoord;\n" +
+            "}";
+
+    private static final String FRAGMENT =
+            "#extension GL_OES_EGL_image_external : require\n" +
+            "precision mediump float;\n" +
+            "varying vec2 vTextureCoord;\n" +
+            "uniform samplerExternalOES uTexture;\n" +
+            "void main(){\n" +
+            "    vec4 nColor = texture2D(uTexture, vTextureCoord);\n" +
+            "    gl_FragColor = nColor;\n" +
+            "}";
+
     /**
      * 顶点坐标
      */
@@ -53,14 +74,14 @@ public class CameraRenderer implements GLSurfaceView.Renderer {
     private int mVboId;
     private int mTextureId;
     private SurfaceTexture mCameraTexture;
-    private int vPosition;
-    private int fPosition;
-    private int mMatrix;
+    private int aTextureCoordLocation;
+    private int aVertexCoordLocation;
+    private int uVertexMatrix;
     private int vCoordMatrix;
     private float[] mMVPMatrix = new float[16];
     private int mPreviewWidth, mPreviewHeight;
     private int mWidth, mHeight;
-    private int vTexture;
+    private int uTexture;
     private  FboRenderer mFboRenderer;
 
     public CameraRenderer(Context context) {
@@ -85,22 +106,19 @@ public class CameraRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        String vertexSource = Utils.getGLResource(mContext, R.raw.camera_vertex_shader);
-        String fragmentSource = Utils.getGLResource(mContext, R.raw.camera_fragment_shader);
-        mProgram = Utils.createProgram(vertexSource, fragmentSource);
+        mProgram = Utils.createProgram(VERTEX, FRAGMENT);
         mVboId = setupVbo();
         mTextureId = setupTexture();
 
         mFboRenderer.onSurfaceCreated(mPreviewWidth, mPreviewHeight);
 
         mCameraTexture = new SurfaceTexture(mTextureId);
-//        mCameraTexture = new SurfaceTexture(mFboRenderer.getTextureId());
 
-        vPosition = GLES20.glGetAttribLocation(mProgram, "vPosition");
-        fPosition = GLES20.glGetAttribLocation(mProgram, "fPosition");
-        mMatrix = GLES20.glGetUniformLocation(mProgram, "mMatrix");
+        aTextureCoordLocation = GLES20.glGetAttribLocation(mProgram, "aTextureCoord");
+        aVertexCoordLocation = GLES20.glGetAttribLocation(mProgram, "aVertexCoord");
+        uVertexMatrix = GLES20.glGetUniformLocation(mProgram, "uVertexMatrix");
         vCoordMatrix = GLES20.glGetUniformLocation(mProgram, "vCoordMatrix");
-        vTexture = GLES20.glGetUniformLocation(mProgram, "vTexture");
+        uTexture = GLES20.glGetUniformLocation(mProgram, "uTexture");
     }
 
     @Override
@@ -119,34 +137,31 @@ public class CameraRenderer implements GLSurfaceView.Renderer {
         mCameraTexture.updateTexImage();
 
         //设置正交投影参数
-        GLES20.glUniformMatrix4fv(mMatrix, 1, false, mMVPMatrix, 0);
+        GLES20.glUniformMatrix4fv(uVertexMatrix, 1, false, mMVPMatrix, 0);
         GLES20.glUniformMatrix4fv(vCoordMatrix, 1, false, mFragmentMatrix, 0);
 
         //绑定vbo
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVboId);
-        //绑定纹理
-//        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_BINDING_EXTERNAL_OES, mTextureId);
-
         //赋值顶点坐标
-        GLES20.glEnableVertexAttribArray(vPosition);
-        GLES20.glVertexAttribPointer(vPosition, 2, GLES20.GL_FLOAT
+        GLES20.glEnableVertexAttribArray(aVertexCoordLocation);
+        GLES20.glVertexAttribPointer(aVertexCoordLocation, 2, GLES20.GL_FLOAT
                 , false, 8, 0);
-
         //赋值纹理坐标
-        GLES20.glEnableVertexAttribArray(fPosition);
-        GLES20.glVertexAttribPointer(fPosition, 2, GLES20.GL_FLOAT
+        GLES20.glEnableVertexAttribArray(aTextureCoordLocation);
+        GLES20.glVertexAttribPointer(aTextureCoordLocation, 2, GLES20.GL_FLOAT
                 , false, 8, mVertexCoordinate.length * 4);
-
+        //解邦vbo
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        //绑定纹理
+        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_BINDING_EXTERNAL_OES, mTextureId);
         //绘制到屏幕
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
-
-        //解邦
+        //解邦纹理
         GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_BINDING_EXTERNAL_OES, 0);
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
         mFboRenderer.unbindFbo();
-
         mFboRenderer.drawFrame();
+
     }
 
     /**
@@ -214,6 +229,7 @@ public class CameraRenderer implements GLSurfaceView.Renderer {
         //缓存顶点坐标
         GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER, 0
                 , mVertexCoordinate.length * 4, mVertexBuffer);
+
         //缓存纹理坐标
         GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER
                 , mVertexCoordinate.length * 4
@@ -262,6 +278,7 @@ public class CameraRenderer implements GLSurfaceView.Renderer {
     public void setPreviewSize(int previewWidth, int previewHight) {
         mPreviewHeight = previewHight;
         mPreviewWidth = previewWidth;
+        //获取状态栏高度
         computeMatrix();
     }
 

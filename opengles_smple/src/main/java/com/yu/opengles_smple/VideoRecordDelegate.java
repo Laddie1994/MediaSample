@@ -67,22 +67,10 @@ public class VideoRecordDelegate {
             this.mMediaMuxer = new MediaMuxer(outPath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
             initVideoCodec();
             initAudioCodec();
-            initAudioRecoder();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("TAG", e.toString());
         }
-    }
-
-    private void initAudioRecoder() {
-        mAudioBufferSize = AudioRecord.getMinBufferSize(44100
-                , AudioFormat.CHANNEL_IN_STEREO
-                , AudioFormat.ENCODING_PCM_16BIT) * 2;
-        mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC
-                , 44100, AudioFormat.CHANNEL_IN_STEREO
-                , AudioFormat.ENCODING_PCM_16BIT, mAudioBufferSize);
-
-        mAudioRecoderThread = new AudioRecoderThread(this);
     }
 
     private void initAudioCodec() throws Exception {
@@ -91,6 +79,15 @@ public class VideoRecordDelegate {
         audioFormat.setInteger(MediaFormat.KEY_BIT_RATE, mVideoWidth * mVideoHeight * 4);
         mAudioCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_AUDIO_AAC);
         mAudioCodec.configure(audioFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+
+        mAudioBufferSize = AudioRecord.getMinBufferSize(44100
+                , AudioFormat.CHANNEL_IN_STEREO
+                , AudioFormat.ENCODING_PCM_16BIT) * 2;
+        mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC
+                , 44100, AudioFormat.CHANNEL_IN_STEREO
+                , AudioFormat.ENCODING_PCM_16BIT, mAudioBufferSize);
+
+        mAudioRecoderThread = new AudioRecoderThread(this);
     }
 
     private void initVideoCodec() throws Exception {

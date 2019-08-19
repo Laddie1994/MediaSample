@@ -80,8 +80,8 @@ public class FboRenderer {
         mFragmentBuffer.position(0);
 
         mWidth = Utils.getScreenWidth(context);
-        mHeight = Utils.getScreenHeight(context);
-        Matrix.orthoM(mMvpMatrix, 0, -1, 1, -1f, 1f, -1f, 1f);
+        mHeight = Utils.getScreenHeight(context) - Utils.getStatusBarHeight(context);
+        Matrix.orthoM(mMvpMatrix, 0, -1, 1, -1f, 1f, -2f, 100f);
         Matrix.rotateM(mMvpMatrix, 0, 180, 1, 0, 0);
     }
 

@@ -1,11 +1,13 @@
 package com.yu.opengles_smple;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.opengl.EGL14;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -89,6 +91,17 @@ public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         mRenderer.onSurfaceChanged(gl, width, height);
         rotateCameraAngle();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = event.getAction();
+        switch (action){
+            case MotionEvent.ACTION_DOWN:
+                mHelper.newCameraFocus(new Point(((int) event.getRawX()), ((int) event.getRawY())), null);
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override

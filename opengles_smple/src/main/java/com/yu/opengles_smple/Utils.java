@@ -1,6 +1,7 @@
 package com.yu.opengles_smple;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.opengl.GLES20;
 import android.util.Log;
 
@@ -95,5 +96,11 @@ public class Utils {
 
     public static int getScreenHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
+    }
+
+    public static int getStatusBarHeight(Context context){
+        Resources resources = context.getResources();
+        int identifier = resources.getIdentifier("status_bar_height", "dimen", "android");
+        return resources.getDimensionPixelSize(identifier);
     }
 }

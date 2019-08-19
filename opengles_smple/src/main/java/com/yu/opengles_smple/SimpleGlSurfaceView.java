@@ -12,7 +12,7 @@ public class SimpleGlSurfaceView extends GLSurfaceView {
     public SimpleGlSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setEGLContextClientVersion(2);
-        setRenderer(new ImageRenderer(context, R.mipmap.zly));
+        setRenderer(new CubeRenderer(context));
         // 设置是否持续渲染
         // 渲染一次（RENDERMODE_WHEN_DIRTY）
         // 循环渲染（RENDERMODE_CONTINUOUSLY）

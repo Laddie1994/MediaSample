@@ -101,9 +101,9 @@ public class CubeRenderer implements GLSurfaceView.Renderer {
         //计算宽高比
         float ratio = width / (height * 1.0f);
         //透视投影
-        Matrix.frustumM(mProjextMatrix, 0, -ratio, ratio, -1, 1, 3, 20);
+        Matrix.frustumM(mProjextMatrix, 0, -ratio, ratio, -1, 1, 4, 20);
         //相机位置
-        Matrix.setLookAtM(mViewMatrix, 0, 5.0f, 5.0f, 10.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(mViewMatrix, 0, 5.0f, 5.0f, 10.0f, 0f, 0f, 0f, 0f, 1f, 0.0f);
         //变换矩阵
         Matrix.multiplyMM(mMVPMatrix, 0, mProjextMatrix, 0, mViewMatrix, 0);
     }

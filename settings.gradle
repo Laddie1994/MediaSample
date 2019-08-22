@@ -1,1 +1,1 @@
-include ':app', ':opengles_smple'
+include ':app', ':videoRecord', ':audioPlayer', ':ChainSimple'

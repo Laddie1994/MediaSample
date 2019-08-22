@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ChainSimple/ChainSimple.iml" filepath="$PROJECT_DIR$/ChainSimple/ChainSimple.iml" />
       <module fileurl="file://$PROJECT_DIR$/OpenGLSample.iml" filepath="$PROJECT_DIR$/OpenGLSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/opengles_smple/opengles_smple.iml" filepath="$PROJECT_DIR$/opengles_smple/opengles_smple.iml" />
+      <module fileurl="file://$PROJECT_DIR$/audioPlayer/audioPlayer.iml" filepath="$PROJECT_DIR$/audioPlayer/audioPlayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoRecord/videoRecord.iml" filepath="$PROJECT_DIR$/videoRecord/videoRecord.iml" />
     </modules>
   </component>
 </project>

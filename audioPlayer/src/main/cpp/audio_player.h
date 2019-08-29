@@ -57,7 +57,7 @@ public:
 
     ~AudioPlayer();
 
-    void initialize(audioPlayerCallback, void *ctx);
+    void registerCallback(audioPlayerCallback);
 
     void start();
 

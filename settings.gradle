@@ -1,1 +1,1 @@
-include ':app', ':videoRecord', ':audioPlayer', ':ChainSimple'
+include ':app', ':videoRecord', ':audioPlayer', ':ChainSimple', ':videorenderer'

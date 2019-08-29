@@ -26,7 +26,6 @@ public:
     DZJNICall *pJniCall = NULL;
     pthread_t playThreadT;
     std::queue<AudioPcm *> *audioFrameQueue;
-
     int audioStramIndex = -1;
     AVCodecParameters *pCodecParameters;
     AVCodec *pCodec = NULL;
@@ -34,8 +33,6 @@ public:
     AudioDecoder(DZJNICall *pJniCall, const char *url);
 
     ~AudioDecoder();
-
-public:
 
     void start();
 

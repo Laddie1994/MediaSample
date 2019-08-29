@@ -11,7 +11,8 @@ import java.nio.FloatBuffer;
 
 public class FboRenderer {
 
-    public final String mVertexShaderStr = "attribute vec4 v_Position;\n" +
+    public final String mVertexShaderStr =
+            "    attribute vec4 v_Position;\n" +
             "    attribute vec2 f_Position;\n" +
             "    varying vec2 ft_Position;\n" +
             "    uniform mat4 v_matrix;" +

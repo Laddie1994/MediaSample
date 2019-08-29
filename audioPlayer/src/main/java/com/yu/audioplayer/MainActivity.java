@@ -12,7 +12,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    File mMusicFile = new File(Environment.getExternalStorageDirectory(), "test.mp3");
+    File mMusicFile = new File(Environment.getExternalStorageDirectory(), "test.mp4");
     private SimpleAudioPlayer mPlayer;
 
     @Override

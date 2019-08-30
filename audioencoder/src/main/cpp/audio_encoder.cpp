@@ -127,7 +127,8 @@ int AudioEncoder::start() {
     pFrame = av_frame_alloc();
     pFrame->nb_samples = pCodecContext->frame_size;
     pFrame->format = pCodecContext->sample_fmt;
-    // 获取一帧数据的大小
+    
+    // 初始化音频帧
     frameSize = av_samples_get_buffer_size(NULL, pCodecContext->channels, pCodecContext->frame_size,
                                            pCodecContext->sample_fmt, 1);
     frameBuffer = (uint8_t *) malloc(frameSize);

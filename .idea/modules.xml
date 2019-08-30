@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/audioPlayer/audioPlayer.iml" filepath="$PROJECT_DIR$/audioPlayer/audioPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/audioencoder/audioencoder.iml" filepath="$PROJECT_DIR$/audioencoder/audioencoder.iml" />
       <module fileurl="file://$PROJECT_DIR$/videoRecord/videoRecord.iml" filepath="$PROJECT_DIR$/videoRecord/videoRecord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/videoencoder/videoencoder.iml" filepath="$PROJECT_DIR$/videoencoder/videoencoder.iml" />
       <module fileurl="file://$PROJECT_DIR$/videorenderer/videorenderer.iml" filepath="$PROJECT_DIR$/videorenderer/videorenderer.iml" />
     </modules>
   </component>

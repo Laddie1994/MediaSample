@@ -5,20 +5,19 @@
 #include "audio_player.h"
 
 AudioPlayer::AudioPlayer() {
-
-}
-
-AudioPlayer::~AudioPlayer() {
-
-}
-
-void AudioPlayer::initialize(audioPlayerCallback audioPlayerCallback, void *ctx) {
-    this->produceDataCallback = audioPlayerCallback;
     this->ctx = ctx;
     createEngin();
     createMix();
     createPlay();
     createBufferQueue();
+}
+
+void AudioPlayer::registerCallback(audioPlayerCallback callback) {
+    this->produceDataCallback = callback;
+}
+
+AudioPlayer::~AudioPlayer() {
+
 }
 
 void AudioPlayer::start() {

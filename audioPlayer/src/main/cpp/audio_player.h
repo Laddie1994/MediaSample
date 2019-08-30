@@ -57,7 +57,7 @@ public:
 
     ~AudioPlayer();
 
-    void registerCallback(audioPlayerCallback);
+    void registerCallback(audioPlayerCallback callback);
 
     void start();
 

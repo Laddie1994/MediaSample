@@ -3,6 +3,8 @@
 //
 
 #include "audio_player.h"
+#include "../../../../audioPlayer/src/main/cpp/audio_player.h"
+
 
 AudioPlayer::AudioPlayer(void *ctx) {
     this->ctx = ctx;

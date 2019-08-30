@@ -6,7 +6,7 @@
 
 AudioController::AudioController(JNIEnv *jniEnv, jobject instance, const char* audioPath) {
     audioPlayer = new AudioPlayer();
-    audioPlayer->initialize(audioPlayerFillData, this);
+    audioPlayer->registerCallback(audioPlayerFillData);
 
     jniCall = new DZJNICall(jniEnv, instance);
     audioDecoder = new AudioDecoder(jniCall, audioPath);
